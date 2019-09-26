@@ -1,8 +1,13 @@
 public class Main {
 
-
+public static final String XML_PATH = "xml/lbpcascade_frontalface.xml" ;
     public static void main(String[] args) {
-        HumanFaceDetection.getDetectionImage("faces/f1.jpg" , "xml/lbpcascade_frontalface.xml");
+
+        for(int i = 1; i <= 11 ;i ++)
+        {
+            HumanFaceDetection.getDetectionImage("faces/f" + i +  ".jpg" , XML_PATH);
+
+        }
 
     }
 }
