@@ -1,5 +1,3 @@
-package com.humanFD;
-
 import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
@@ -7,19 +5,17 @@ import org.opencv.objdetect.CascadeClassifier;
 
 
 
-public class Main {
+public class HumanFaceDetection {
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
-    public static void main(String[] args) {
+    public  static  void getDetectionImage(String imageRelativePath, String xmlFileRelativePath){
 
 
-        String imagePath = "images/faces1.jpg";
-        Mat source = Imgcodecs.imread(imagePath);
 
-        String xmlFile = "xml/lbpcascade_frontalface.xml";
-        CascadeClassifier clsf = new CascadeClassifier(xmlFile);
+        Mat source = Imgcodecs.imread(imageRelativePath);
+        CascadeClassifier clsf = new CascadeClassifier(xmlFileRelativePath);
 
         MatOfRect faceDetection = new MatOfRect();
 
@@ -38,8 +34,27 @@ public class Main {
             );
 
         }
-        Imgcodecs.imwrite("images/faces1-out.png",source);
+        String exitName = getExitName(imageRelativePath);
+        Imgcodecs.imwrite(exitName,source);
 
+    }
+
+    private  static  String getExitName(String path)
+    {
+        char[] chrs = path.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        StringBuilder sbPath = new StringBuilder();
+        sb.append("faces-out/");
+
+        int last = chrs.length - 5; // before the dot;
+        while (chrs[last] != '/')
+        {
+           sbPath.append(chrs[last]);
+           last--;
+        }
+
+        sb.append(sbPath.reverse() + "-out.png");
+        return sb.toString();
     }
 
 
